@@ -23,7 +23,7 @@ export function Checkbox(props: {
     caption={props.caption}
     captionClassName={props.captionClassName}
     className={props.className}
-    disabled={props.isDisabled}
+    isDisabled={props.isDisabled}
     errorMessage={meta.error}
     isErrorMessageHidden={props.isErrorMessageHidden}
     isInvalid={isInvalid}

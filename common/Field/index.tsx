@@ -4,7 +4,7 @@ import {ReactNode} from 'react'
 export function Field(props: {
   caption?: string
   captionClassName?: string
-  children: ReactNode
+  children?: ReactNode
   className?: string
   errorMessage?: string
   isDisabled?: boolean

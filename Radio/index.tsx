@@ -27,7 +27,7 @@ export function Radio(props: {
 
   return <Field
     className={props.className}
-    disabled={props.isDisabled}
+    isDisabled={props.isDisabled}
     errorMessage={meta.error}
     isErrorMessageHidden={props.isErrorMessageHidden}
     isInvalid={isInvalid}

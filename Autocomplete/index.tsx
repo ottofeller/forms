@@ -27,7 +27,7 @@ export function Autocomplete(props: {
     isInvalid={meta.error && meta.touched}
     errorMessage={meta.error}
     className={props.className}
-    disabled={props.isDisabled}
+    isDisabled={props.isDisabled}
   >
     <Select
       className={props.selectBoxClassName}
