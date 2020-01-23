@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import {Field as FormikField, useField} from 'formik'
 import {ChangeEvent} from 'react'
 import {Field} from '../common/Field'
+import React from 'react'
 
 export function Select(props: {
   caption?: string

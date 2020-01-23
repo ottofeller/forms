@@ -6,7 +6,7 @@
     "target": "esnext",
     "outDir": "out",
     "rootDir": "./",
-    "jsx": "preserve",
+    "jsx": "react",
     "sourceMap": false,
     "moduleResolution": "node",
     "lib": [
