@@ -14,7 +14,7 @@ export function Input(props: {
   name: string
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
-  type: string
+  type?: string
 }) {
   const [field, meta] = useField(props.name)
   const isInvalid = meta.error && meta.touched
@@ -34,7 +34,7 @@ export function Input(props: {
       disabled={props.isDisabled}
       labelClassName={props.labelClassName}
       onChange={props.onChange}
-      type="input"
+      type={props.type || 'input'}
       name={props.name}
     />
   </Field>
