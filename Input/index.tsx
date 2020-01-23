@@ -10,6 +10,7 @@ export function Input(props: {
   inputClassName?: string
   isDisabled?: boolean
   isErrorMessageHidden?: boolean
+  label?: string
   labelClassName?: string
   name: string
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
@@ -25,6 +26,8 @@ export function Input(props: {
     className={props.className}
     disabled={props.isDisabled}
     errorMessage={meta.error}
+    label={props.label}
+    labelClassName={props.labelClassName}
     isErrorMessageHidden={props.isErrorMessageHidden}
     isInvalid={isInvalid}
   >

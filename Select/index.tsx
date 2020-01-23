@@ -9,6 +9,7 @@ export function Select(props: {
   className?: string
   isDisabled?: boolean
   isErrorMessageHidden?: boolean
+  label?: string
   labelClassName?: string
   name: string
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
@@ -28,6 +29,8 @@ export function Select(props: {
     errorMessage={meta.error}
     isErrorMessageHidden={props.isErrorMessageHidden}
     isInvalid={isInvalid}
+    label={props.label}
+    labelClassName={props.labelClassName}
   >
     <FormikField as="select" className={props.selectBoxClassName} {...field}>
       {R.map(option => <option key={option.value} value={option.value}>{option.label}</option>, props.options)}

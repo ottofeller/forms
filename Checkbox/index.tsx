@@ -10,6 +10,7 @@ export function Checkbox(props: {
   checkboxClassName?: string
   isDisabled?: boolean
   isErrorMessageHidden?: boolean
+  label?: string
   labelClassName?: string
   name: string
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
@@ -27,6 +28,8 @@ export function Checkbox(props: {
     errorMessage={meta.error}
     isErrorMessageHidden={props.isErrorMessageHidden}
     isInvalid={isInvalid}
+    label={props.label}
+    labelClassName={props.labelClassName}
   >
     <input checked={Boolean(field.value)} className={props.checkboxClassName} type="checkbox" {...field} />
   </Field>
