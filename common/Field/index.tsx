@@ -6,8 +6,8 @@ export function Field(props: {
   captionClassName?: string
   children: ReactNode
   className?: string
-  isDisabled?: boolean
   errorMessage?: string
+  isDisabled?: boolean
   isErrorMessageHidden?: boolean
   isInvalid?: boolean
   label?: string
