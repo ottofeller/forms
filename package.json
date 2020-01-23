@@ -1,6 +1,6 @@
 {
   "name": "@ottofeller/forms",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Common form fields",
   "homepage": "https://github.com/ottofeller/forms",
   "main": "index.js",
