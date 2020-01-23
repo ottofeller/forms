@@ -2,8 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
-    "module": "esnext",
-    "target": "esnext",
+    "target": "es5",
     "outDir": "out",
     "rootDir": "./",
     "jsx": "react",
@@ -18,9 +17,7 @@
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "resolveJsonModule": true
   },
   "exclude": [
     "out",
