@@ -35,7 +35,6 @@ export function Input(props: {
       {...field}
       className={props.inputClassName}
       disabled={props.isDisabled}
-      labelClassName={props.labelClassName}
       onChange={props.onChange}
       type={props.type || 'input'}
       name={props.name}
