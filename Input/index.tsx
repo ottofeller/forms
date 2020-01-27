@@ -7,6 +7,7 @@ export function Input(props: {
   caption?: string
   captionClassName?: string
   className?: string
+  errorMessageClassName?: string
   inputClassName?: string
   isDisabled?: boolean
   isErrorMessageHidden?: boolean
@@ -24,6 +25,7 @@ export function Input(props: {
     caption={props.caption}
     captionClassName={props.captionClassName}
     className={props.className}
+    errorMessageClassName={props.errorMessageClassName}
     isDisabled={props.isDisabled}
     errorMessage={meta.error}
     label={props.label}
@@ -35,7 +37,7 @@ export function Input(props: {
       {...field}
       className={props.inputClassName}
       disabled={props.isDisabled}
-      onChange={props.onChange}
+      placeholder={props.placeholder}
       type={props.type || 'input'}
       name={props.name}
     />

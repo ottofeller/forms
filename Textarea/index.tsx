@@ -1,20 +1,19 @@
-import * as R from 'ramda'
 import {Field as FormikField, useField} from 'formik'
 import {Field} from '../common/Field'
 import React from 'react'
 
-export function Select(props: {
+export const Textarea = React.memo(function (props: {
   caption?: string
   captionClassName?: string
   className?: string
+  controlClassName?: string
   errorMessageClassName?: string
   isDisabled?: boolean
   isErrorMessageHidden?: boolean
   label?: string
   labelClassName?: string
   name: string
-  options: {value: string, label: string}[]
-  selectBoxClassName?: string
+  placeholder?: string
 }) {
   const [field, meta] = useField(props.name)
   const isInvalid = meta.error && meta.touched
@@ -26,13 +25,18 @@ export function Select(props: {
     errorMessageClassName={props.errorMessageClassName}
     isDisabled={props.isDisabled}
     errorMessage={meta.error}
-    isErrorMessageHidden={props.isErrorMessageHidden}
-    isInvalid={isInvalid}
     label={props.label}
     labelClassName={props.labelClassName}
+    isErrorMessageHidden={props.isErrorMessageHidden}
+    isInvalid={isInvalid}
   >
-    <FormikField as="select" className={props.selectBoxClassName} {...field}>
-      {R.map(option => <option key={option.value} value={option.value}>{option.label}</option>, props.options)}
-    </FormikField>
+    <FormikField
+      {...field}
+      as="textarea"
+      className={props.controlClassName}
+      disabled={props.isDisabled}
+      placeholder={props.placeholder}
+      name={props.name}
+    />
   </Field>
-}
+})

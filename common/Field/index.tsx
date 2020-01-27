@@ -8,6 +8,7 @@ export function Field(props: {
   children?: ReactNode
   className?: string
   errorMessage?: string
+  errorMessageClassName?: string
   isDisabled?: boolean
   isErrorMessageHidden?: boolean
   isInvalid?: boolean
@@ -21,8 +22,7 @@ export function Field(props: {
     {props.children}
     {props.caption && <span className={props.captionClassName}>{props.caption}</span>}
 
-    {props.isInvalid && props.errorMessage && !props.isErrorMessageHidden && <div className="error-message">
-      {props.errorMessage}
-    </div>}
+    {props.isInvalid && props.errorMessage && !props.isErrorMessageHidden && <div
+      className={props.errorMessageClassName}>{props.errorMessage}</div>}
   </div>
 }
