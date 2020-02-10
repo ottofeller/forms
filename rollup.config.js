@@ -12,6 +12,7 @@ export default {
     format: 'cjs',
     globals: {
       react: 'React',
+      'react-dom': 'ReactDOM',
       formik: 'Formik'
     },
   },
