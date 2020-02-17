@@ -3,20 +3,19 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
-// eslint-disable-next-line import/no-default-export
 export default {
-  external: ['formik', 'react', 'react-dom'],
+  external: ['react', 'react-dom'],
   input: 'index.tsx',
+
   output: {
+    exports: 'named',
     file: pkg.main,
     format: 'cjs',
-    globals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-      formik: 'Formik'
-    },
   },
+
   plugins: [
+    resolve(),
+
     commonjs({
       include: ['node_modules/**'],
 
@@ -27,10 +26,10 @@ export default {
         'node_modules/scheduler/index.js': ['LowPriority', 'unstable_runWithPriority'],
       }
     }),
-    resolve(),
+
     typescript({
       rollupCommonJSResolveHack: true,
-      exclude: '**/__tests__/**',
+      exclude: ['node_modules/**', '**/__tests__/**'],
       clean: true,
     }),
   ],
