@@ -10,7 +10,7 @@ export default {
   output: {
     exports: 'named',
     file: pkg.main,
-    format: 'cjs',
+    format: 'es',
   },
 
   plugins: [

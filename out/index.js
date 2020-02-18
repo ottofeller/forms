@@ -1,12 +1,5 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var React = require('react');
-var React__default = _interopDefault(React);
-var reactDom = require('react-dom');
+import React, { createContext, useContext, useEffect, Children, createElement, forwardRef, Fragment, Component, PureComponent, useCallback } from 'react';
+import { createPortal, findDOMNode } from 'react-dom';
 
 var isProduction = process.env.NODE_ENV === 'production';
 function warning(condition, message) {
@@ -1325,16 +1318,16 @@ var isObject = function isObject(obj) {
 /** @private Does a React component have exactly 0 children? */
 
 var isEmptyChildren = function isEmptyChildren(children) {
-  return React.Children.count(children) === 0;
+  return Children.count(children) === 0;
 };
 
 var FormikContext =
 /*#__PURE__*/
-React.createContext(undefined);
+createContext(undefined);
 var FormikProvider = FormikContext.Provider;
 var FormikConsumer = FormikContext.Consumer;
 function useFormikContext() {
-  var formik = React.useContext(FormikContext);
+  var formik = useContext(FormikContext);
   !!!formik ? process.env.NODE_ENV !== "production" ? warning(false, "Formik context is undefined, please verify you are calling useFormikContext() as child of a <Formik> component.") : warning(false) : void 0;
   return formik;
 }
@@ -1353,7 +1346,7 @@ function useField(propsOrFieldName) {
   };
   var fieldName = props.name,
       validateFn = props.validate;
-  React.useEffect(function () {
+  useEffect(function () {
     if (fieldName) {
       registerField(fieldName, {
         validate: validateFn
@@ -1386,7 +1379,7 @@ function Field(_ref) {
   var _useFormikContext = useFormikContext(),
       formik = _objectWithoutPropertiesLoose(_useFormikContext, ["validate", "validationSchema"]);
 
-  React.useEffect(function () {
+  useEffect(function () {
     if (process.env.NODE_ENV !== "production") {
       !!render ? process.env.NODE_ENV !== "production" ? warning(false, "<Field render> has been deprecated and will be removed in future versions of Formik. Please use a child callback function instead. To get rid of this warning, replace <Field name=\"" + name + "\" render={({field, form}) => ...} /> with <Field name=\"" + name + "\">{({field, form, meta}) => ...}</Field>") : warning(false) : void 0;
       !!(is && children && isFunction(children)) ? process.env.NODE_ENV !== "production" ? warning(false, 'You should not use <Field as> and <Field children> as a function in the same <Field> component; <Field as> will be ignored.') : warning(false) : void 0;
@@ -1398,7 +1391,7 @@ function Field(_ref) {
 
   var registerField = formik.registerField,
       unregisterField = formik.unregisterField;
-  React.useEffect(function () {
+  useEffect(function () {
     registerField(name, {
       validate: validate
     });
@@ -1433,13 +1426,13 @@ function Field(_ref) {
       var innerRef = props.innerRef,
           rest = _objectWithoutPropertiesLoose(props, ["innerRef"]);
 
-      return React.createElement(component, _extends({
+      return createElement(component, _extends({
         ref: innerRef
       }, field, {}, rest), children);
     } // We don't pass `meta` for backwards compat
 
 
-    return React.createElement(component, _extends({
+    return createElement(component, _extends({
       field: field,
       form: formik
     }, props), children);
@@ -1452,17 +1445,17 @@ function Field(_ref) {
     var _innerRef = props.innerRef,
         _rest = _objectWithoutPropertiesLoose(props, ["innerRef"]);
 
-    return React.createElement(asElement, _extends({
+    return createElement(asElement, _extends({
       ref: _innerRef
     }, field, {}, _rest), children);
   }
 
-  return React.createElement(asElement, _extends({}, field, {}, props), children);
+  return createElement(asElement, _extends({}, field, {}, props), children);
 }
 
 var Form =
 /*#__PURE__*/
-React.forwardRef(function (props, ref) {
+forwardRef(function (props, ref) {
   // iOS needs an "action" attribute for nice input: https://stackoverflow.com/a/39485162/406725
   // We default the action to "#" in case the preventDefault fails (just updates the URL hash)
   var action = props.action,
@@ -1474,7 +1467,7 @@ React.forwardRef(function (props, ref) {
       handleReset = _useFormikContext.handleReset,
       handleSubmit = _useFormikContext.handleSubmit;
 
-  return React.createElement("form", Object.assign({
+  return createElement("form", Object.assign({
     onSubmit: handleSubmit,
     ref: ref,
     onReset: handleReset,
@@ -1533,11 +1526,11 @@ var classnames = createCommonjsModule(function (module) {
 });
 
 function Field$1(props) {
-    return React__default.createElement("div", { className: classnames(props.className, { 'is-disabled': props.isDisabled, 'is-invalid': props.isInvalid }) },
-        props.label && React__default.createElement("label", { className: props.labelClassName }, props.label),
+    return React.createElement("div", { className: classnames(props.className, { 'is-disabled': props.isDisabled, 'is-invalid': props.isInvalid }) },
+        props.label && React.createElement("label", { className: props.labelClassName }, props.label),
         props.children,
-        props.caption && React__default.createElement("span", { className: props.captionClassName }, props.caption),
-        props.isInvalid && props.errorMessage && !props.isErrorMessageHidden && React__default.createElement("div", { className: props.errorMessageClassName }, props.errorMessage));
+        props.caption && React.createElement("span", { className: props.captionClassName }, props.caption),
+        props.isInvalid && props.errorMessage && !props.isErrorMessageHidden && React.createElement("div", { className: props.errorMessageClassName }, props.errorMessage));
 }
 
 function _objectWithoutPropertiesLoose$1(source, excluded) {
@@ -3293,25 +3286,25 @@ function css() {
 
 var isBrowser$2 = typeof document !== 'undefined';
 
-var EmotionCacheContext = React.createContext( // we're doing this to avoid preconstruct's dead code elimination in this one case
+var EmotionCacheContext = createContext( // we're doing this to avoid preconstruct's dead code elimination in this one case
 // because this module is primarily intended for the browser and node
 // but it's also required in react native and similar environments sometimes
 // and we could have a special build just for that
 // but this is much easier and the native packages
 // might use a different theme context in the future anyway
 typeof HTMLElement !== 'undefined' ? createCache() : null);
-var ThemeContext = React.createContext({});
+var ThemeContext = createContext({});
 var CacheProvider = EmotionCacheContext.Provider;
 
 var withEmotionCache = function withEmotionCache(func) {
   var render = function render(props, ref) {
-    return React.createElement(EmotionCacheContext.Consumer, null, function (cache) {
+    return createElement(EmotionCacheContext.Consumer, null, function (cache) {
       return func(props, cache, ref);
     });
   }; // $FlowFixMe
 
 
-  return React.forwardRef(render);
+  return forwardRef(render);
 };
 
 if (!isBrowser$2) {
@@ -3333,17 +3326,17 @@ if (!isBrowser$2) {
     var _proto = BasicProvider.prototype;
 
     _proto.render = function render() {
-      return React.createElement(EmotionCacheContext.Provider, this.state, this.props.children(this.state.value));
+      return createElement(EmotionCacheContext.Provider, this.state, this.props.children(this.state.value));
     };
 
     return BasicProvider;
-  }(React.Component);
+  }(Component);
 
   withEmotionCache = function withEmotionCache(func) {
     return function (props) {
-      return React.createElement(EmotionCacheContext.Consumer, null, function (context) {
+      return createElement(EmotionCacheContext.Consumer, null, function (context) {
         if (context === null) {
-          return React.createElement(BasicProvider, null, function (newContext) {
+          return createElement(BasicProvider, null, function (newContext) {
             return func(props, newContext);
           });
         } else {
@@ -3405,7 +3398,7 @@ var render = function render(cache, props, theme, ref) {
 
   newProps.ref = ref;
   newProps.className = className;
-  var ele = React.createElement(type, newProps);
+  var ele = createElement(type, newProps);
 
   if (!isBrowser$2 && rules !== undefined) {
     var _ref;
@@ -3418,7 +3411,7 @@ var render = function render(cache, props, theme, ref) {
       next = next.next;
     }
 
-    return React.createElement(React.Fragment, null, React.createElement("style", (_ref = {}, _ref["data-emotion-" + cache.key] = serializedNames, _ref.dangerouslySetInnerHTML = {
+    return createElement(Fragment, null, createElement("style", (_ref = {}, _ref["data-emotion-" + cache.key] = serializedNames, _ref.dangerouslySetInnerHTML = {
       __html: rules
     }, _ref.nonce = cache.sheet.nonce, _ref)), ele);
   }
@@ -3431,7 +3424,7 @@ var Emotion =
 withEmotionCache(function (props, cache, ref) {
   // use Context.read for the theme when it's stable
   if (typeof props.css === 'function') {
-    return React.createElement(ThemeContext.Consumer, null, function (theme) {
+    return createElement(ThemeContext.Consumer, null, function (theme) {
       return render(cache, props, theme, ref);
     });
   }
@@ -3449,7 +3442,7 @@ var jsx = function jsx(type, props) {
 
   if (props == null || !hasOwnProperty.call(props, 'css')) {
     // $FlowFixMe
-    return React.createElement.apply(undefined, args);
+    return createElement.apply(undefined, args);
   }
 
   if (process.env.NODE_ENV !== 'production' && typeof props.css === 'string' && // check if there is a css declaration
@@ -3495,7 +3488,7 @@ var jsx = function jsx(type, props) {
   } // $FlowFixMe
 
 
-  return React.createElement.apply(null, createElementArgArray);
+  return createElement.apply(null, createElementArgArray);
 };
 
 var keyframes = function keyframes() {
@@ -3571,7 +3564,7 @@ function merge(registered, css, className) {
 }
 
 var ClassNames = withEmotionCache(function (props, context) {
-  return React.createElement(ThemeContext.Consumer, null, function (theme) {
+  return createElement(ThemeContext.Consumer, null, function (theme) {
     var rules = '';
     var serializedHashes = '';
     var hasRendered = false;
@@ -3627,7 +3620,7 @@ var ClassNames = withEmotionCache(function (props, context) {
     if (!isBrowser$2 && rules.length !== 0) {
       var _ref;
 
-      return React.createElement(React.Fragment, null, React.createElement("style", (_ref = {}, _ref["data-emotion-" + context.key] = serializedHashes.substring(1), _ref.dangerouslySetInnerHTML = {
+      return createElement(Fragment, null, createElement("style", (_ref = {}, _ref["data-emotion-" + context.key] = serializedHashes.substring(1), _ref.dangerouslySetInnerHTML = {
         __html: rules
       }, _ref.nonce = context.sheet.nonce, _ref)), ele);
     }
@@ -4690,7 +4683,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 
 
-var _react2 = _interopRequireDefault(React__default);
+var _react2 = _interopRequireDefault(React);
 
 
 
@@ -4919,7 +4912,7 @@ var AutosizeInput = function (_Component) {
 	}]);
 
 	return AutosizeInput;
-}(React__default.Component);
+}(React.Component);
 
 AutosizeInput.propTypes = {
 	className: _propTypes2.default.string, // className for the outer element
@@ -5213,7 +5206,7 @@ function (_Component) {
   }]);
 
   return MenuPlacer;
-}(React.Component);
+}(Component);
 
 _defineProperty(MenuPlacer, "contextTypes", {
   getPortalPlacement: propTypes.func
@@ -5405,12 +5398,12 @@ function (_Component2) {
       var menuWrapper = jsx("div", {
         css: getStyles('menuPortal', state)
       }, children);
-      return appendTo ? reactDom.createPortal(menuWrapper, appendTo) : menuWrapper;
+      return appendTo ? createPortal(menuWrapper, appendTo) : menuWrapper;
     }
   }]);
 
   return MenuPortal;
-}(React.Component);
+}(Component);
 
 _defineProperty(MenuPortal, "childContextTypes", {
   getPortalPlacement: propTypes.func
@@ -5582,7 +5575,7 @@ function (_Component) {
   }]);
 
   return ValueContainer;
-}(React.Component); // ==============================
+}(Component); // ==============================
 // Indicator Container
 // ==============================
 
@@ -6056,7 +6049,7 @@ function (_Component) {
   }]);
 
   return MultiValueRemove;
-}(React.Component);
+}(Component);
 
 var MultiValue =
 /*#__PURE__*/
@@ -6122,7 +6115,7 @@ function (_Component2) {
   }]);
 
   return MultiValue;
-}(React.Component);
+}(Component);
 
 _defineProperty(MultiValue, "defaultProps", {
   cropWithEllipsis: true
@@ -6640,7 +6633,7 @@ function (_Component) {
   }]);
 
   return DummyInput;
-}(React.Component);
+}(Component);
 
 var NodeResolver =
 /*#__PURE__*/
@@ -6656,7 +6649,7 @@ function (_Component) {
   _createClass(NodeResolver, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.innerRef(reactDom.findDOMNode(this));
+      this.props.innerRef(findDOMNode(this));
     }
   }, {
     key: "componentWillUnmount",
@@ -6671,7 +6664,7 @@ function (_Component) {
   }]);
 
   return NodeResolver;
-}(React.Component);
+}(Component);
 
 var STYLE_KEYS = ['boxSizing', 'height', 'overflow', 'paddingRight', 'position'];
 var LOCK_STYLES = {
@@ -6830,7 +6823,7 @@ function (_Component) {
   }]);
 
   return ScrollLock;
-}(React.Component);
+}(Component);
 
 _defineProperty(ScrollLock, "defaultProps", {
   accountForScrollbars: true
@@ -6922,7 +6915,7 @@ function (_PureComponent) {
   }]);
 
   return ScrollBlock;
-}(React.PureComponent);
+}(PureComponent);
 
 var ScrollCaptor =
 /*#__PURE__*/
@@ -7074,14 +7067,14 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return React__default.createElement(NodeResolver, {
+      return React.createElement(NodeResolver, {
         innerRef: this.getScrollTarget
       }, this.props.children);
     }
   }]);
 
   return ScrollCaptor;
-}(React.Component);
+}(Component);
 
 var ScrollCaptorSwitch =
 /*#__PURE__*/
@@ -7101,12 +7094,12 @@ function (_Component2) {
           isEnabled = _this$props2.isEnabled,
           props = _objectWithoutProperties(_this$props2, ["isEnabled"]);
 
-      return isEnabled ? React__default.createElement(ScrollCaptor, props) : this.props.children;
+      return isEnabled ? React.createElement(ScrollCaptor, props) : this.props.children;
     }
   }]);
 
   return ScrollCaptorSwitch;
-}(React.Component);
+}(Component);
 
 _defineProperty(ScrollCaptorSwitch, "defaultProps", {
   isEnabled: true
@@ -8640,7 +8633,7 @@ function (_Component) {
 
       if (!isSearchable) {
         // use a dummy input to maintain focus/blur functionality
-        return React__default.createElement(DummyInput, {
+        return React.createElement(DummyInput, {
           id: id,
           innerRef: this.getInputRef,
           onBlur: this.onInputBlur,
@@ -8663,7 +8656,7 @@ function (_Component) {
           cx = _this$commonProps.cx,
           theme = _this$commonProps.theme,
           selectProps = _this$commonProps.selectProps;
-      return React__default.createElement(Input, _extends$1({
+      return React.createElement(Input, _extends$1({
         autoCapitalize: "none",
         autoComplete: "off",
         autoCorrect: "off",
@@ -8709,7 +8702,7 @@ function (_Component) {
           isFocused = _this$state8.isFocused;
 
       if (!this.hasValue() || !controlShouldRenderValue) {
-        return inputValue ? null : React__default.createElement(Placeholder, _extends$1({}, commonProps, {
+        return inputValue ? null : React.createElement(Placeholder, _extends$1({}, commonProps, {
           key: "placeholder",
           isDisabled: isDisabled,
           isFocused: isFocused
@@ -8719,7 +8712,7 @@ function (_Component) {
       if (isMulti) {
         var selectValues = selectValue.map(function (opt, index) {
           var isOptionFocused = opt === focusedValue;
-          return React__default.createElement(MultiValue, _extends$1({}, commonProps, {
+          return React.createElement(MultiValue, _extends$1({}, commonProps, {
             components: {
               Container: MultiValueContainer,
               Label: MultiValueLabel,
@@ -8752,7 +8745,7 @@ function (_Component) {
       }
 
       var singleValue = selectValue[0];
-      return React__default.createElement(SingleValue, _extends$1({}, commonProps, {
+      return React.createElement(SingleValue, _extends$1({}, commonProps, {
         data: singleValue,
         isDisabled: isDisabled
       }), this.formatOptionLabel(singleValue, 'value'));
@@ -8776,7 +8769,7 @@ function (_Component) {
         onTouchEnd: this.onClearIndicatorTouchEnd,
         'aria-hidden': 'true'
       };
-      return React__default.createElement(ClearIndicator, _extends$1({}, commonProps, {
+      return React.createElement(ClearIndicator, _extends$1({}, commonProps, {
         innerProps: innerProps,
         isFocused: isFocused
       }));
@@ -8794,7 +8787,7 @@ function (_Component) {
       var innerProps = {
         'aria-hidden': 'true'
       };
-      return React__default.createElement(LoadingIndicator, _extends$1({}, commonProps, {
+      return React.createElement(LoadingIndicator, _extends$1({}, commonProps, {
         innerProps: innerProps,
         isDisabled: isDisabled,
         isFocused: isFocused
@@ -8811,7 +8804,7 @@ function (_Component) {
       var commonProps = this.commonProps;
       var isDisabled = this.props.isDisabled;
       var isFocused = this.state.isFocused;
-      return React__default.createElement(IndicatorSeparator, _extends$1({}, commonProps, {
+      return React.createElement(IndicatorSeparator, _extends$1({}, commonProps, {
         isDisabled: isDisabled,
         isFocused: isFocused
       }));
@@ -8829,7 +8822,7 @@ function (_Component) {
         onTouchEnd: this.onDropdownIndicatorTouchEnd,
         'aria-hidden': 'true'
       };
-      return React__default.createElement(DropdownIndicator, _extends$1({}, commonProps, {
+      return React.createElement(DropdownIndicator, _extends$1({}, commonProps, {
         innerProps: innerProps,
         isDisabled: isDisabled,
         isFocused: isFocused
@@ -8876,7 +8869,7 @@ function (_Component) {
         // focused option changes so we calculate additional props based on that
         var isFocused = focusedOption === props.data;
         props.innerRef = isFocused ? _this5.getFocusedOptionRef : undefined;
-        return React__default.createElement(Option, _extends$1({}, commonProps, props, {
+        return React.createElement(Option, _extends$1({}, commonProps, props, {
           isFocused: isFocused
         }), _this5.formatOptionLabel(props.data, 'menu'));
       };
@@ -8890,7 +8883,7 @@ function (_Component) {
                 group = _objectWithoutProperties(item, ["type"]);
 
             var headingId = "".concat(item.key, "-heading");
-            return React__default.createElement(Group, _extends$1({}, commonProps, group, {
+            return React.createElement(Group, _extends$1({}, commonProps, group, {
               Heading: GroupHeading,
               headingProps: {
                 id: headingId
@@ -8908,14 +8901,14 @@ function (_Component) {
           inputValue: inputValue
         });
         if (message === null) return null;
-        menuUI = React__default.createElement(LoadingMessage, commonProps, message);
+        menuUI = React.createElement(LoadingMessage, commonProps, message);
       } else {
         var _message = noOptionsMessage({
           inputValue: inputValue
         });
 
         if (_message === null) return null;
-        menuUI = React__default.createElement(NoOptionsMessage, commonProps, _message);
+        menuUI = React.createElement(NoOptionsMessage, commonProps, _message);
       }
 
       var menuPlacementProps = {
@@ -8925,12 +8918,12 @@ function (_Component) {
         menuPosition: menuPosition,
         menuShouldScrollIntoView: menuShouldScrollIntoView
       };
-      var menuElement = React__default.createElement(MenuPlacer, _extends$1({}, commonProps, menuPlacementProps), function (_ref6) {
+      var menuElement = React.createElement(MenuPlacer, _extends$1({}, commonProps, menuPlacementProps), function (_ref6) {
         var ref = _ref6.ref,
             _ref6$placerProps = _ref6.placerProps,
             placement = _ref6$placerProps.placement,
             maxHeight = _ref6$placerProps.maxHeight;
-        return React__default.createElement(Menu, _extends$1({}, commonProps, menuPlacementProps, {
+        return React.createElement(Menu, _extends$1({}, commonProps, menuPlacementProps, {
           innerRef: ref,
           innerProps: {
             onMouseDown: _this5.onMenuMouseDown,
@@ -8938,13 +8931,13 @@ function (_Component) {
           },
           isLoading: isLoading,
           placement: placement
-        }), React__default.createElement(ScrollCaptorSwitch, {
+        }), React.createElement(ScrollCaptorSwitch, {
           isEnabled: captureMenuScroll,
           onTopArrive: onMenuScrollToTop,
           onBottomArrive: onMenuScrollToBottom
-        }, React__default.createElement(ScrollBlock, {
+        }, React.createElement(ScrollBlock, {
           isEnabled: menuShouldBlockScroll
-        }, React__default.createElement(MenuList, _extends$1({}, commonProps, {
+        }, React.createElement(MenuList, _extends$1({}, commonProps, {
           innerRef: _this5.getMenuListRef,
           isLoading: isLoading,
           maxHeight: maxHeight
@@ -8953,7 +8946,7 @@ function (_Component) {
       // so we use the same component. the actual portalling logic is forked
       // within the component based on `menuPosition`
 
-      return menuPortalTarget || menuPosition === 'fixed' ? React__default.createElement(MenuPortal, _extends$1({}, commonProps, {
+      return menuPortalTarget || menuPosition === 'fixed' ? React.createElement(MenuPortal, _extends$1({}, commonProps, {
         appendTo: menuPortalTarget,
         controlElement: this.controlRef,
         menuPlacement: menuPlacement,
@@ -8978,29 +8971,29 @@ function (_Component) {
           var value = selectValue.map(function (opt) {
             return _this6.getOptionValue(opt);
           }).join(delimiter);
-          return React__default.createElement("input", {
+          return React.createElement("input", {
             name: name,
             type: "hidden",
             value: value
           });
         } else {
           var input = selectValue.length > 0 ? selectValue.map(function (opt, i) {
-            return React__default.createElement("input", {
+            return React.createElement("input", {
               key: "i-".concat(i),
               name: name,
               type: "hidden",
               value: _this6.getOptionValue(opt)
             });
-          }) : React__default.createElement("input", {
+          }) : React.createElement("input", {
             name: name,
             type: "hidden"
           });
-          return React__default.createElement("div", null, input);
+          return React.createElement("div", null, input);
         }
       } else {
         var _value = selectValue[0] ? this.getOptionValue(selectValue[0]) : '';
 
-        return React__default.createElement("input", {
+        return React.createElement("input", {
           name: name,
           type: "hidden",
           value: _value
@@ -9011,11 +9004,11 @@ function (_Component) {
     key: "renderLiveRegion",
     value: function renderLiveRegion() {
       if (!this.state.isFocused) return null;
-      return React__default.createElement(A11yText, {
+      return React.createElement(A11yText, {
         "aria-live": "polite"
-      }, React__default.createElement("p", {
+      }, React.createElement("p", {
         id: "aria-selection-event"
-      }, "\xA0", this.state.ariaLiveSelection), React__default.createElement("p", {
+      }, "\xA0", this.state.ariaLiveSelection), React.createElement("p", {
         id: "aria-context"
       }, "\xA0", this.constructAriaLiveMessage()));
     }
@@ -9034,7 +9027,7 @@ function (_Component) {
           menuIsOpen = _this$props20.menuIsOpen;
       var isFocused = this.state.isFocused;
       var commonProps = this.commonProps = this.getCommonProps();
-      return React__default.createElement(SelectContainer, _extends$1({}, commonProps, {
+      return React.createElement(SelectContainer, _extends$1({}, commonProps, {
         className: className,
         innerProps: {
           id: id,
@@ -9042,7 +9035,7 @@ function (_Component) {
         },
         isDisabled: isDisabled,
         isFocused: isFocused
-      }), this.renderLiveRegion(), React__default.createElement(Control, _extends$1({}, commonProps, {
+      }), this.renderLiveRegion(), React.createElement(Control, _extends$1({}, commonProps, {
         innerRef: this.getControlRef,
         innerProps: {
           onMouseDown: this.onControlMouseDown,
@@ -9051,16 +9044,16 @@ function (_Component) {
         isDisabled: isDisabled,
         isFocused: isFocused,
         menuIsOpen: menuIsOpen
-      }), React__default.createElement(ValueContainer, _extends$1({}, commonProps, {
+      }), React.createElement(ValueContainer, _extends$1({}, commonProps, {
         isDisabled: isDisabled
-      }), this.renderPlaceholderOrValue(), this.renderInput()), React__default.createElement(IndicatorsContainer, _extends$1({}, commonProps, {
+      }), this.renderPlaceholderOrValue(), this.renderInput()), React.createElement(IndicatorsContainer, _extends$1({}, commonProps, {
         isDisabled: isDisabled
       }), this.renderClearIndicator(), this.renderLoadingIndicator(), this.renderIndicatorSeparator(), this.renderDropdownIndicator())), this.renderMenu(), this.renderFormField());
     }
   }]);
 
   return Select;
-}(React.Component);
+}(Component);
 
 _defineProperty(Select, "defaultProps", defaultProps);
 
@@ -9177,7 +9170,7 @@ var manageState = function manageState(SelectComponent) {
             defaultValue = _this$props2.defaultValue,
             props = _objectWithoutProperties(_this$props2, ["defaultInputValue", "defaultMenuIsOpen", "defaultValue"]);
 
-        return React__default.createElement(SelectComponent, _extends$1({}, props, {
+        return React.createElement(SelectComponent, _extends$1({}, props, {
           ref: function ref(_ref) {
             _this2.select = _ref;
           },
@@ -9193,7 +9186,7 @@ var manageState = function manageState(SelectComponent) {
     }]);
 
     return StateManager;
-  }(React.Component), _defineProperty(_class, "defaultProps", defaultProps$1), _temp;
+  }(Component), _defineProperty(_class, "defaultProps", defaultProps$1), _temp;
 };
 
 var index = manageState(Select);
@@ -9202,40 +9195,40 @@ function Autocomplete(props) {
     const onChange = props.onChange;
     const [field, meta] = useField(props.name);
     const { setFieldValue } = useFormikContext();
-    const setValue = React.useCallback(obj => {
+    const setValue = useCallback(obj => {
         setFieldValue(props.name, obj.value);
         if (typeof onChange === 'function')
             onChange(obj.value);
     }, [onChange, props.name, setFieldValue]);
-    return React__default.createElement(Field$1, { isInvalid: meta.error && meta.touched, errorMessage: meta.error, className: props.className, isDisabled: props.isDisabled },
-        React__default.createElement(index, { className: props.selectBoxClassName, classNamePrefix: "autocomplete", id: `select-${field.name}`, inputId: `input-${field.name}`, isDisabled: props.isDisabled, onChange: setValue, options: props.options, value: props.value }));
+    return React.createElement(Field$1, { isInvalid: meta.error && meta.touched, errorMessage: meta.error, className: props.className, isDisabled: props.isDisabled },
+        React.createElement(index, { className: props.selectBoxClassName, classNamePrefix: "autocomplete", id: `select-${field.name}`, inputId: `input-${field.name}`, isDisabled: props.isDisabled, onChange: setValue, options: props.options, value: props.value }));
 }
 
 function Checkbox(props) {
     const [field, meta] = useField(props.name);
     const isInvalid = meta.error && meta.touched;
-    return React__default.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, isDisabled: props.isDisabled, errorMessage: meta.error, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid, label: props.label, labelClassName: props.labelClassName },
-        React__default.createElement("input", Object.assign({ checked: Boolean(field.value), className: props.checkboxClassName, type: "checkbox" }, field)));
+    return React.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, isDisabled: props.isDisabled, errorMessage: meta.error, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid, label: props.label, labelClassName: props.labelClassName },
+        React.createElement("input", Object.assign({ checked: Boolean(field.value), className: props.checkboxClassName, type: "checkbox" }, field)));
 }
 
 function Input$1(props) {
-    const [field, meta] = props.useField(props.name);
+    const [field, meta] = useField(props.name);
     const isInvalid = meta.error && meta.touched;
-    return React__default.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, errorMessageClassName: props.errorMessageClassName, isDisabled: props.isDisabled, errorMessage: meta.error, label: props.label, labelClassName: props.labelClassName, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid },
-        React__default.createElement(Field, Object.assign({}, field, { className: props.inputClassName, disabled: props.isDisabled, placeholder: props.placeholder, type: props.type || 'input', name: props.name })));
+    return React.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, errorMessageClassName: props.errorMessageClassName, isDisabled: props.isDisabled, errorMessage: meta.error, label: props.label, labelClassName: props.labelClassName, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid },
+        React.createElement(Field, Object.assign({}, field, { className: props.inputClassName, disabled: props.isDisabled, placeholder: props.placeholder, type: props.type || 'input', name: props.name })));
 }
 
 function Radio(props) {
     const [field, meta] = useField(props.name);
     const isInvalid = meta.error && meta.touched;
-    const change = React.useCallback((event) => {
+    const change = useCallback((event) => {
         field.onChange(event);
         if (typeof props.onChange === 'function')
             props.onChange(event);
     }, [field, props]);
-    return React__default.createElement(Field$1, { className: props.className, isDisabled: props.isDisabled, errorMessage: meta.error, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid, label: props.label, labelClassName: props.labelClassName },
-        React__default.createElement(Field, Object.assign({}, field, { className: props.radioClassName, disabled: props.isDisabled, onChange: change, type: "radio", name: props.name, value: props.value })),
-        React__default.createElement("span", { className: props.captionClassName }, props.caption));
+    return React.createElement(Field$1, { className: props.className, isDisabled: props.isDisabled, errorMessage: meta.error, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid, label: props.label, labelClassName: props.labelClassName },
+        React.createElement(Field, Object.assign({}, field, { className: props.radioClassName, disabled: props.isDisabled, onChange: change, type: "radio", name: props.name, value: props.value })),
+        React.createElement("span", { className: props.captionClassName }, props.caption));
 }
 
 function _isPlaceholder(a) {
@@ -9801,20 +9794,15 @@ var map = /*#__PURE__*/_curry2( /*#__PURE__*/_dispatchable(['fantasy-land/map', 
 function Select$1(props) {
     const [field, meta] = useField(props.name);
     const isInvalid = meta.error && meta.touched;
-    return React__default.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, errorMessageClassName: props.errorMessageClassName, isDisabled: props.isDisabled, errorMessage: meta.error, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid, label: props.label, labelClassName: props.labelClassName },
-        React__default.createElement(Field, Object.assign({ as: "select", className: props.selectBoxClassName }, field), map(option => React__default.createElement("option", { key: option.value, value: option.value }, option.label), props.options)));
+    return React.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, errorMessageClassName: props.errorMessageClassName, isDisabled: props.isDisabled, errorMessage: meta.error, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid, label: props.label, labelClassName: props.labelClassName },
+        React.createElement(Field, Object.assign({ as: "select", className: props.selectBoxClassName }, field), map(option => React.createElement("option", { key: option.value, value: option.value }, option.label), props.options)));
 }
 
-const Textarea = React__default.memo(function (props) {
+const Textarea = React.memo(function (props) {
     const [field, meta] = useField(props.name);
     const isInvalid = meta.error && meta.touched;
-    return React__default.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, errorMessageClassName: props.errorMessageClassName, isDisabled: props.isDisabled, errorMessage: meta.error, label: props.label, labelClassName: props.labelClassName, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid },
-        React__default.createElement(Field, Object.assign({}, field, { as: "textarea", className: props.controlClassName, disabled: props.isDisabled, placeholder: props.placeholder, name: props.name })));
+    return React.createElement(Field$1, { caption: props.caption, captionClassName: props.captionClassName, className: props.className, errorMessageClassName: props.errorMessageClassName, isDisabled: props.isDisabled, errorMessage: meta.error, label: props.label, labelClassName: props.labelClassName, isErrorMessageHidden: props.isErrorMessageHidden, isInvalid: isInvalid },
+        React.createElement(Field, Object.assign({}, field, { as: "textarea", className: props.controlClassName, disabled: props.isDisabled, placeholder: props.placeholder, name: props.name })));
 });
 
-exports.Autocomplete = Autocomplete;
-exports.Checkbox = Checkbox;
-exports.Input = Input$1;
-exports.Radio = Radio;
-exports.Select = Select$1;
-exports.Textarea = Textarea;
+export { Autocomplete, Checkbox, Input$1 as Input, Radio, Select$1 as Select, Textarea };
