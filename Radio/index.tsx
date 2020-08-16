@@ -2,6 +2,7 @@ import {ChangeEvent, ReactNode, useCallback} from 'react'
 import {Field as FormikField, useField} from 'formik'
 import {Field} from '../common/Field'
 import React from 'react'
+import {useOnChangeWithInstantValidation} from '../common/hooks'
 
 export function Radio(props: {
   captionClassName?: string
@@ -16,15 +17,9 @@ export function Radio(props: {
   caption: string | ReactNode
   value?: any
 }) {
-  const [field, meta] = useField(props.name)
+  const [field, meta, form] = useField(props.name)
   const isInvalid = meta.error && meta.touched
-
-  const change = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    field.onChange(event)
-
-    if(typeof props.onChange === 'function')
-      props.onChange(event)
-  }, [field, props])
+  const onChange = useOnChangeWithInstantValidation({field, form, onChange: props.onChange})
 
   return <Field
     className={props.className}
@@ -39,7 +34,7 @@ export function Radio(props: {
       {...field}
       className={props.radioClassName}
       disabled={props.isDisabled}
-      onChange={change}
+      onChange={onChange}
       type="radio"
       name={props.name}
       value={props.value}

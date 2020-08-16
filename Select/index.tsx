@@ -1,7 +1,8 @@
 import * as R from 'ramda'
 import {Field as FormikField, useField} from 'formik'
+import React, {ChangeEvent, useCallback} from 'react'
 import {Field} from '../common/Field'
-import React from 'react'
+import {useOnChangeWithInstantValidation} from '../common/hooks'
 
 export function Select(props: {
   caption?: string
@@ -13,11 +14,13 @@ export function Select(props: {
   label?: string
   labelClassName?: string
   name: string
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void
   options: {value: string, label: string}[]
   selectBoxClassName?: string
 }) {
-  const [field, meta] = useField(props.name)
+  const [field, meta, form] = useField(props.name)
   const isInvalid = meta.error && meta.touched
+  const onChange = useOnChangeWithInstantValidation({field, form, onChange: props.onChange})
 
   return <Field
     caption={props.caption}
@@ -31,7 +34,12 @@ export function Select(props: {
     label={props.label}
     labelClassName={props.labelClassName}
   >
-    <FormikField as="select" className={props.selectBoxClassName} {...field}>
+    <FormikField
+      as="select"
+      className={props.selectBoxClassName}
+      {...field}
+      onChange={onChange}
+    >
       {R.map(option => <option key={option.value} value={option.value}>{option.label}</option>, props.options)}
     </FormikField>
   </Field>

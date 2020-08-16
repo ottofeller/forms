@@ -1,7 +1,8 @@
-import {ChangeEvent} from 'react'
+import {ChangeEvent, useCallback} from 'react'
 import {Field} from '../common/Field'
 import React from 'react'
 import {useField} from 'formik'
+import {useOnChangeWithInstantValidation} from '../common/hooks'
 
 export function Checkbox(props: {
   caption?: string
@@ -17,8 +18,9 @@ export function Checkbox(props: {
   placeholder?: string
   type: string
 }) {
-  const [field, meta] = useField(props.name)
+  const [field, meta, form] = useField(props.name)
   const isInvalid = meta.error && meta.touched
+  const onChange = useOnChangeWithInstantValidation({field, form, onChange: props.onChange})
 
   return <Field
     caption={props.caption}
@@ -31,6 +33,12 @@ export function Checkbox(props: {
     label={props.label}
     labelClassName={props.labelClassName}
   >
-    <input checked={Boolean(field.value)} className={props.checkboxClassName} type="checkbox" {...field} />
+    <input
+      checked={Boolean(field.value)}
+      className={props.checkboxClassName}
+      type="checkbox"
+      {...field}
+      onChange={onChange}
+    />
   </Field>
 }

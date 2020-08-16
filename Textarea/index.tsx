@@ -1,6 +1,7 @@
 import {Field as FormikField, useField} from 'formik'
+import React, {ChangeEvent, useCallback} from 'react'
 import {Field} from '../common/Field'
-import React from 'react'
+import {useOnChangeWithInstantValidation} from '../common/hooks'
 
 export const Textarea = React.memo(function (props: {
   caption?: string
@@ -15,8 +16,9 @@ export const Textarea = React.memo(function (props: {
   name: string
   placeholder?: string
 }) {
-  const [field, meta] = useField(props.name)
+  const [field, meta, form] = useField(props.name)
   const isInvalid = meta.error && meta.touched
+  const onChange = useOnChangeWithInstantValidation({field, form})
 
   return <Field
     caption={props.caption}
@@ -37,6 +39,7 @@ export const Textarea = React.memo(function (props: {
       disabled={props.isDisabled}
       placeholder={props.placeholder}
       name={props.name}
+      onChange={onChange}
     />
   </Field>
 })
