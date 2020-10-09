@@ -1,7 +1,6 @@
-import {ChangeEvent, ReactNode, useCallback} from 'react'
 import {Field as FormikField, useField} from 'formik'
+import React, {ChangeEvent, ReactNode} from 'react'
 import {Field} from '../common/Field'
-import React from 'react'
 import {useOnChangeWithInstantValidation} from '../common/hooks'
 
 export function Radio(props: {
@@ -18,7 +17,7 @@ export function Radio(props: {
   value?: any
 }) {
   const [field, meta, form] = useField(props.name)
-  const isInvalid = meta.error && meta.touched
+  const isInvalid = !!meta.error && meta.touched
   const onChange = useOnChangeWithInstantValidation({field, form, onChange: props.onChange})
 
   return <Field
