@@ -25,7 +25,7 @@ export function Autocomplete(props: {
   }, [onChange, props.name, setFieldValue])
 
   return <Field
-    isInvalid={!!meta.error && meta.touched}
+    isInvalid={Boolean(meta.error && meta.touched)}
     errorMessage={meta.error}
     className={props.className}
     isDisabled={props.isDisabled}
