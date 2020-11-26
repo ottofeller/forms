@@ -17,7 +17,7 @@ export const Textarea = React.memo(function (props: {
   placeholder?: string
 }) {
   const [field, meta, form] = useField(props.name)
-  const isInvalid = !!meta.error && meta.touched
+  const isInvalid = Boolean(meta.error && meta.touched)
   const onChange = useOnChangeWithInstantValidation({field, form})
 
   return <Field
