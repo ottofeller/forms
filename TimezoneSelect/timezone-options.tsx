@@ -30,7 +30,7 @@ export const timeZoneOptions = [
   {label: '(UTC-03:00) Montevideo', value: 'America/Montevideo'},
   {label: '(UTC-03:00) Salvador', value: 'America/Bahia'},
   {label: '(UTC-02:00) Coordinated Universal Time-02', value: 'America/Noronha'},
-  {label: '(UTC-02:00) Mid-Atlantic - Old', value: undefined},
+  {label: '(UTC-02:00) Mid-Atlantic - Old', value: 'Mid_Atlantic_Old'},
   {label: '(UTC-01:00) Azores', value: 'America/Scoresbysund'},
   {label: '(UTC-01:00) Cape Verde Is.', value: 'Atlantic/Cape_Verde'},
   {label: '(UTC) Casablanca', value: 'Africa/Casablanca'},
@@ -105,6 +105,6 @@ export const timeZoneOptions = [
   {label: '(UTC+12:00) Fiji', value: 'Pacific/Fiji'},
   {label: '(UTC+12:00) Magadan', value: 'Asia/Anadyr'},
   {label: '(UTC+12:00) Petropavlovsk-Kamchatsky - Old', value: 'Asia/Kamchatka'},
-  {label: "(UTC+13:00) Nuku'alofa", value: 'Etc/GMT-13'},
+  {label: '(UTC+13:00) Nuku\'alofa', value: 'Etc/GMT-13'},
   {label: '(UTC+13:00) Samoa', value: 'Pacific/Apia'},
 ]

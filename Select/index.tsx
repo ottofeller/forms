@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import {Field as FormikField, useField} from 'formik'
-import React, {ChangeEvent, useCallback} from 'react'
+import React, {ChangeEvent} from 'react'
 import {Field} from '../common/Field'
 import {useOnChangeWithInstantValidation} from '../common/hooks'
 
@@ -19,7 +19,7 @@ export function Select(props: {
   selectBoxClassName?: string
 }) {
   const [field, meta, form] = useField(props.name)
-  const isInvalid = meta.error && meta.touched
+  const isInvalid = Boolean(meta.error && meta.touched)
   const onChange = useOnChangeWithInstantValidation({field, form, onChange: props.onChange})
 
   return <Field

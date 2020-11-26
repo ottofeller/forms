@@ -1,7 +1,6 @@
 import {Field as FormikField, useField} from 'formik'
-import {ChangeEvent, useCallback} from 'react'
+import React, {ChangeEvent} from 'react'
 import {Field} from '../common/Field'
-import React from 'react'
 import {useOnChangeWithInstantValidation} from '../common/hooks'
 
 export function Input(props: {
@@ -20,7 +19,7 @@ export function Input(props: {
   type?: string
 }) {
   const [field, meta, form] = useField(props.name)
-  const isInvalid = meta.error && meta.touched
+  const isInvalid = Boolean(meta.error && meta.touched)
   const onChange = useOnChangeWithInstantValidation({field, form, onChange: props.onChange})
 
   return <Field

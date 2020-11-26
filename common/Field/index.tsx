@@ -1,6 +1,5 @@
+import React, {ReactNode} from 'react'
 import cn from 'classnames'
-import React from 'react'
-import {ReactNode} from 'react'
 
 export function Field(props: {
   caption?: string

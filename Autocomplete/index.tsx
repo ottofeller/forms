@@ -1,8 +1,7 @@
+import React, {useCallback} from 'react'
 import {useField, useFormikContext} from 'formik'
 import {Field} from '../common/Field'
-import React from 'react'
 import Select from 'react-select'
-import {useCallback} from 'react'
 
 export function Autocomplete(props: {
   className?: string
@@ -20,12 +19,13 @@ export function Autocomplete(props: {
   const setValue = useCallback(obj => {
     setFieldValue(props.name, obj.value)
 
-    if(typeof onChange === 'function')
+    if(typeof onChange === 'function') {
       onChange(obj.value)
+    }
   }, [onChange, props.name, setFieldValue])
 
   return <Field
-    isInvalid={meta.error && meta.touched}
+    isInvalid={Boolean(meta.error && meta.touched)}
     errorMessage={meta.error}
     className={props.className}
     isDisabled={props.isDisabled}
